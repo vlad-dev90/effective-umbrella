@@ -7,6 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using FanficSite.Data;
 
 namespace FanficSite
 {
@@ -14,7 +15,9 @@ namespace FanficSite
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            SeedDataLoader seedDataLoader = new SeedDataLoader();
+            seedDataLoader.LoadData();
+//            BuildWebHost(args).Run();
         }
 
         public static IWebHost BuildWebHost(string[] args) =>

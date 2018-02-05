@@ -11,9 +11,10 @@ using System;
 namespace FanficSite.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180204214223_Initial migration")]
+    partial class Initialmigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,32 +114,12 @@ namespace FanficSite.Data.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("FanficSite.Models.CommentLike", b =>
-                {
-                    b.Property<int>("CommentLikeId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AuthorId");
-
-                    b.Property<int?>("CommentId");
-
-                    b.HasKey("CommentLikeId");
-
-                    b.HasIndex("AuthorId");
-
-                    b.HasIndex("CommentId");
-
-                    b.ToTable("CommentLikes");
-                });
-
             modelBuilder.Entity("FanficSite.Models.Fanfic", b =>
                 {
                     b.Property<int>("FanficId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("AuthorId");
-
-                    b.Property<string>("Title");
 
                     b.HasKey("FanficId");
 
@@ -313,25 +294,12 @@ namespace FanficSite.Data.Migrations
                     b.HasOne("FanficSite.Models.ApplicationUser", "Author")
                         .WithMany("Comments")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("FanficSite.Models.Fanfic", "Fanfic")
                         .WithMany("Comments")
                         .HasForeignKey("FanficId")
-                        .OnDelete(DeleteBehavior.SetNull);
-                });
-
-            modelBuilder.Entity("FanficSite.Models.CommentLike", b =>
-                {
-                    b.HasOne("FanficSite.Models.ApplicationUser", "Author")
-                        .WithMany("CommentLikes")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("FanficSite.Models.Comment", "Comment")
-                        .WithMany("CommentLikes")
-                        .HasForeignKey("CommentId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("FanficSite.Models.Fanfic", b =>
